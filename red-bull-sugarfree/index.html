@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Red Bull Sugarfree Editions</title>
+<meta name="description" content="Novos sabores Red Bull Sugarfree: Maçã, Amora e Pomelo. Nada de açúcar, só asas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,700..900&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a night-blue page lit by whichever edition is selected. The flavor's color is a live token (--accent)
+   that the whole page shifts to; the hero is the lineup film, the centrepiece is the edition switcher. */
+@property --accent { syntax: "<color>"; inherits: true; initial-value: #FF7A1A; }
+@property --accent-2 { syntax: "<color>"; inherits: true; initial-value: #FFD23F; }
+:root {
+  --night: #050A22;
+  --navy: #0A1640;
+  --panel: #101E52;
+  --ink: #F3F5FF;
+  --muted: #A9B2D6;
+  --line: #22316B;
+  --rb-red: #E8173F;
+  --rb-yellow: #FFC72C;
+  --accent: #FF7A1A;
+  --accent-2: #FFD23F;
+  --display: "Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-3: clamp(2.3rem, 5.4vw, 4.2rem);
+  --step-4: clamp(3rem, 8.4vw, 7.4rem);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --z-base: 1;
+  --z-nav: 5;
+  --z-fx: 30;
+  color-scheme: dark;
+  transition: --accent 700ms var(--ease-out), --accent-2 700ms var(--ease-out);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; overflow-x: clip; background: var(--night); color: var(--ink); font-family: var(--body); font-size: var(--step-0); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img, video { display: block; max-width: 100%; }
+h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 900; font-stretch: 78%; text-transform: uppercase; line-height: 0.92; letter-spacing: -0.01em; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  max-width: 1240px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font: 800 var(--step-0)/1 var(--display); font-stretch: 90%; text-transform: uppercase; letter-spacing: 0.02em;
+  padding: 18px 28px; border-radius: 999px; border: 2px solid transparent; text-decoration: none; cursor: pointer;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, box-shadow 200ms ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-accent { background: var(--accent); color: var(--night); box-shadow: 0 0 0 0 transparent; }
+.btn-ghost { background: transparent; color: var(--ink); border-color: color-mix(in srgb, var(--ink) 40%, transparent); }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-2px); }
+  .btn-accent:hover { box-shadow: 0 10px 30px -8px var(--accent); }
+  .btn:active { transform: scale(0.97); }
+}
+
+/* ---------- Nav + hero ---------- */
+.nav { position: absolute; inset: 0 0 auto; z-index: var(--z-nav); }
+.nav .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 20px; }
+.brand { text-decoration: none; display: grid; line-height: 1; }
+.brand b { font: 900 1.6rem/1 var(--display); font-stretch: 80%; font-style: italic; text-transform: uppercase; color: var(--rb-red); text-shadow: 0 0 1px var(--rb-yellow); }
+.brand span { font: 600 0.72rem/1.4 var(--body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.nav-links { display: flex; align-items: center; gap: 26px; font-weight: 600; }
+.nav-links a { text-decoration: none; }
+.nav-links a:not(.btn):hover { color: var(--accent-2); }
+.nav-links .btn { padding: 12px 20px; font-size: var(--step--1); }
+@media (max-width: 860px) { .nav-links a:not(.btn) { display: none; } }
+
+.hero { position: relative; min-height: clamp(600px, 56vw, 860px); display: grid; align-items: end; overflow: hidden; background: var(--navy); }
+.hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 72%; }
+.hero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5, 10, 34, 0.75) 0%, rgba(5, 10, 34, 0) 22%),
+    linear-gradient(0deg, var(--night) 0%, rgba(5, 10, 34, 0.86) 26%, rgba(5, 10, 34, 0) 58%),
+    linear-gradient(90deg, rgba(5, 10, 34, 0.7) 0%, rgba(5, 10, 34, 0) 55%);
+}
+.hero-content { position: relative; z-index: var(--z-base); padding-block: 140px 56px; display: grid; gap: 22px; }
+.tag-new {
+  justify-self: start; display: inline-flex; align-items: center; gap: 8px;
+  background: var(--rb-yellow); color: var(--night); font: 900 0.95rem/1 var(--display); font-stretch: 85%; font-style: italic;
+  text-transform: uppercase; padding: 9px 14px; border-radius: 999px;
+}
+.hero h1 { font-size: var(--step-4); font-style: italic; max-width: 11ch; }
+.hero h1 .hl { color: var(--accent-2); display: block; }
+.hero .lede { font-size: var(--step-1); max-width: 38ch; color: var(--muted); }
+.hero .lede b { color: var(--ink); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.film-toggle {
+  position: absolute; z-index: var(--z-base); right: max(16px, env(safe-area-inset-right, 0px)); bottom: 24px;
+  width: 46px; height: 46px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  background: rgba(5, 10, 34, 0.55); color: var(--ink); display: grid; place-items: center; cursor: pointer;
+}
+.film-toggle svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* hero entrance: lines streak in from the left */
+.streak { display: block; animation: streak 900ms var(--ease-out) var(--d, 0ms) both; }
+@keyframes streak { from { opacity: 0; transform: translateX(-60px) skewX(-12deg); } }
+.intro { animation: fadeUp 700ms var(--ease-out) var(--d, 0ms) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } }
+@keyframes fadeIn { from { opacity: 0; } }
+
+/* ---------- Ticker ---------- */
+.ticker-zone { overflow: hidden; padding-block: 12px; margin-block: -20px; position: relative; z-index: 2; }
+.ticker { background: var(--accent); color: var(--night); overflow: hidden; transform: rotate(-1.2deg) scale(1.03); }
+.ticker-track { display: flex; width: max-content; animation: marquee 26s linear infinite; }
+.ticker-group { display: flex; align-items: center; gap: 24px; padding-right: 24px; padding-block: 14px; white-space: nowrap;
+  font: 900 1.45rem/1 var(--display); font-stretch: 80%; font-style: italic; text-transform: uppercase; }
+.ticker-group i { width: 12px; height: 12px; border-radius: 50%; background: var(--night); flex: none; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Sections ---------- */
+section { padding-block: 104px; }
+@media (max-width: 720px) { section { padding-block: 68px; } }
+.head { display: grid; gap: 14px; max-width: 48rem; margin-bottom: 40px; }
+.head h2 { font-size: var(--step-3); }
+.head h2 .hl { color: var(--accent); }
+.head p { font-size: var(--step-1); color: var(--muted); max-width: 44ch; }
+
+/* edition switcher */
+.tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+.tab {
+  display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+  font: 800 1rem/1 var(--display); font-stretch: 85%; text-transform: uppercase; letter-spacing: 0.02em;
+  color: var(--ink); background: var(--panel); border: 2px solid var(--line); padding: 12px 18px; border-radius: 999px;
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+.tab i { width: 14px; height: 14px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+.tab[aria-selected="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 16%, var(--panel)); }
+@media (hover: hover) and (pointer: fine) { .tab:hover { border-color: var(--c); } }
+
+.stage { perspective: 1400px; }
+.banner {
+  position: relative; aspect-ratio: 1600 / 893; max-width: 100%; border-radius: 28px; overflow: hidden; margin: 0;
+  background: var(--navy); box-shadow: 0 40px 80px -40px var(--accent);
+  transform-style: preserve-3d; transition: box-shadow 700ms var(--ease-out);
+}
+.banner img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transform: scale(1.06); transition: opacity 600ms var(--ease-out), transform 1400ms var(--ease-out);
+}
+.banner img.on { opacity: 1; transform: scale(1); }
+.fx { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.fx span { position: absolute; height: 3px; border-radius: 3px; background: linear-gradient(90deg, transparent, var(--accent-2), #fff); filter: drop-shadow(0 0 6px var(--accent)); }
+
+.edition { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto; gap: 32px; align-items: center; margin-top: 30px; }
+@media (max-width: 900px) { .edition { grid-template-columns: minmax(0, 1fr); gap: 18px; } }
+.edition h3 { font-size: clamp(2rem, 4vw, 3rem); font-style: italic; }
+.edition h3 small { display: block; font-size: 0.42em; color: var(--accent); font-style: normal; letter-spacing: 0.04em; margin-bottom: 6px; }
+.edition p { color: var(--muted); max-width: 46ch; }
+.notes { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.notes li { border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent); color: var(--ink); padding: 7px 14px; border-radius: 999px; font-weight: 600; font-size: 0.95rem; }
+.swap { animation: swapIn 500ms var(--ease-out); }
+@keyframes swapIn { from { opacity: 0; transform: translateY(10px); } }
+
+/* specs */
+.specs-band { background: var(--navy); border-block: 1px solid var(--line); }
+.specs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 900px) { .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 36px; } }
+@media (max-width: 480px) { .specs { grid-template-columns: minmax(0, 1fr); } }
+.spec { padding: 4px 28px; border-left: 1px solid var(--line); display: grid; gap: 10px; align-content: start; }
+.spec:first-child { border-left: 0; padding-left: 0; }
+@media (max-width: 900px) { .spec:nth-child(odd) { border-left: 0; padding-left: 0; } }
+@media (max-width: 480px) { .spec { border-left: 0; padding-left: 0; } }
+.spec .num { font: 900 clamp(3.4rem, 6vw, 5rem)/0.9 var(--display); font-stretch: 75%; font-style: italic; color: var(--accent-2); font-variant-numeric: tabular-nums; }
+.spec .num small { font-size: 0.38em; font-style: normal; color: var(--ink); margin-left: 4px; }
+.spec h3 { font-size: 1.35rem; font-stretch: 85%; }
+.spec p { color: var(--muted); font-size: 0.98rem; }
+
+/* film */
+.film-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 48px; align-items: center; }
+@media (max-width: 900px) { .film-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
+.film-frame { border-radius: 24px; overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; background: var(--navy); position: relative; border: 1px solid var(--line); }
+.film-frame video { width: 100%; height: 100%; object-fit: cover; }
+.lineup { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
+.lineup li { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+.lineup i { width: 12px; height: 28px; border-radius: 4px; background: var(--c); flex: none; }
+
+/* shop */
+.shop-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 40px; background: var(--panel); border: 1px solid var(--line); border-radius: 28px; padding: clamp(20px, 4vw, 40px); }
+@media (max-width: 900px) { .shop-card { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+fieldset { border: 0; padding: 0; margin: 0 0 28px; min-width: 0; }
+legend { font: 800 1rem/1 var(--display); font-stretch: 85%; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 14px; padding: 0; }
+.choices { display: flex; flex-wrap: wrap; gap: 10px; }
+.choice { position: relative; }
+.choice input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.choice label { display: grid; gap: 2px; min-width: 128px; padding: 12px 16px; border-radius: 14px; border: 2px solid var(--line); cursor: pointer; transition: border-color 160ms ease; }
+.choice label small { color: var(--muted); font-size: 0.85rem; }
+.choice input:checked + label { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.choice input:focus-visible + label { outline: 3px solid var(--accent-2); outline-offset: 2px; }
+.summary { display: grid; gap: 14px; align-content: start; font-variant-numeric: tabular-nums; }
+.cans { height: 220px; display: flex; justify-content: center; align-items: flex-end; border-radius: 20px; overflow: hidden; background: radial-gradient(circle at 50% 70%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 65%), var(--navy); }
+.cans img { height: 200px; width: auto; margin-inline: -30px; border-radius: 12px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent); mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent); }
+.cans img.pop { animation: canPop 450ms var(--ease-out) backwards; }
+@keyframes canPop { from { opacity: 0; transform: translateY(30px) rotate(-6deg); } }
+.price { font: 900 3.6rem/1 var(--display); font-stretch: 75%; font-style: italic; display: inline-block; }
+.per { color: var(--muted); }
+.perks { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 0.95rem; color: var(--muted); }
+.perks li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 10px; vertical-align: middle; }
+.summary .btn { width: 100%; }
+.status { min-height: 1.6em; font-weight: 600; color: var(--accent-2); }
+
+/* faq */
+.faq-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 56px; }
+@media (max-width: 900px) { .faq-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+details { border-bottom: 1px solid var(--line); }
+details:first-of-type { border-top: 1px solid var(--line); }
+summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 20px; font-weight: 700; font-size: 1.1rem; }
+summary::-webkit-details-marker { display: none; }
+.plus { flex: none; width: 22px; height: 22px; position: relative; color: var(--accent); }
+.plus::before, .plus::after { content: ""; position: absolute; inset: 10px 2px auto; height: 2px; background: currentColor; transition: transform 200ms var(--ease-out); }
+.plus::after { transform: rotate(90deg); }
+details[open] .plus::after { transform: rotate(0deg); }
+.answer { padding-bottom: 22px; color: var(--muted); max-width: 62ch; }
+details[open] .answer { animation: fadeDown 240ms var(--ease-out); }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-6px); } }
+
+/* final */
+.final { text-align: center; position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 60%), var(--night); }
+.final .wrap { display: grid; justify-items: center; gap: 24px; }
+.final h2 { font-size: var(--step-4); font-style: italic; max-width: 12ch; }
+.final-cans { display: flex; justify-content: center; gap: 4px; margin-top: 8px; }
+.final-cans button { border: 0; padding: 0; background: none; cursor: pointer; border-radius: 16px; }
+.final-cans img { height: clamp(150px, 22vw, 230px); width: auto; border-radius: 16px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); animation: float 5s ease-in-out var(--delay, 0s) infinite; }
+@keyframes float { 50% { transform: translateY(-12px); } }
+@media (hover: hover) and (pointer: fine) { .final-cans button:hover img { animation-play-state: paused; } }
+
+footer { border-top: 1px solid var(--line); padding-block: 40px; color: var(--muted); font-size: var(--step--1); }
+.foot { display: grid; gap: 12px; max-width: 80ch; }
+.foot strong { color: var(--ink); }
+
+/* scroll reveals: applied by script only to blocks that start below the fold */
+[data-reveal] .spec, [data-reveal] .lineup li { transition: opacity 650ms var(--ease-out) var(--d, 0ms), transform 650ms var(--ease-out) var(--d, 0ms); }
+.spec:nth-child(2), .lineup li:nth-child(2) { --d: 90ms; }
+.spec:nth-child(3), .lineup li:nth-child(3) { --d: 180ms; }
+.spec:nth-child(4), .lineup li:nth-child(4) { --d: 270ms; }
+.lineup li:nth-child(5) { --d: 360ms; }
+.lineup li:nth-child(6) { --d: 450ms; }
+.is-pre .spec { opacity: 0; transform: translateY(26px); }
+.is-pre .lineup li { opacity: 0; transform: translateX(-20px); }
+[data-reveal] .film-frame, [data-reveal].stage { transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out); }
+.is-pre .film-frame, .is-pre.stage { opacity: 0; transform: scale(0.95); }
+
+@media (prefers-reduced-motion: reduce) {
+  .streak, .intro { animation-name: fadeIn; }
+  .ticker-track, .final-cans img { animation: none; }
+  .banner img { transition: opacity 300ms ease; transform: none; }
+  .banner img.on { transform: none; }
+  .swap, .cans img.pop { animation-name: fadeIn; }
+  details[open] .answer { animation-name: fadeIn; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#topo"><b>Red Bull</b><span>Sugarfree Editions</span></a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#sabores">Sabores</a>
+      <a href="#sem-acucar">Sem açúcar</a>
+      <a href="#linha">A linha</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a class="btn btn-accent" href="#comprar">Comprar</a>
+    </nav>
+  </div>
+</header>
+
+<main id="topo">
+  <section class="hero" style="padding:0">
+    <video id="heroFilm" src="assets/lineup.mp4" poster="assets/lineup-poster.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+    <div class="wrap hero-content">
+      <span class="tag-new intro" style="--d:0ms">Novo · 3 sabores</span>
+      <h1><span class="streak" style="--d:80ms">Nada de açúcar.</span><span class="streak hl" style="--d:200ms">Só asas.</span></h1>
+      <p class="lede intro" style="--d:380ms">Chegaram as novas <b>Sugarfree Editions</b>: Maçã, Amora e Pomelo. Todo o sabor das Editions que você já conhece, com <b>zero açúcar</b> na lata de 250 ml.</p>
+      <div class="hero-actions intro" style="--d:480ms">
+        <a class="btn btn-accent" href="#sabores">Conhecer os sabores</a>
+        <a class="btn btn-ghost" href="#comprar">Comprar agora</a>
+      </div>
+    </div>
+    <button class="film-toggle" id="heroToggle" type="button" aria-label="Pausar vídeo">
+      <svg viewBox="0 0 18 18" id="heroIcon"><rect x="3" y="2" width="4" height="14" rx="1"/><rect x="11" y="2" width="4" height="14" rx="1"/></svg>
+    </button>
+  </section>
+
+  <div class="ticker-zone"><div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack">
+      <div class="ticker-group"><span>Sem açúcar</span><i></i><span>The Maçã Edition</span><i></i><span>The Amora Edition</span><i></i><span>The Pomelo Edition</span><i></i><span>Só asas</span><i></i></div>
+      <div class="ticker-group"><span>Sem açúcar</span><i></i><span>The Maçã Edition</span><i></i><span>The Amora Edition</span><i></i><span>The Pomelo Edition</span><i></i><span>Só asas</span><i></i></div>
+    </div>
+  </div></div>
+
+  <section id="sabores">
+    <div class="wrap">
+      <div class="head">
+        <h2>Três sabores novos. <span class="hl">Zero açúcar.</span></h2>
+        <p>Escolha uma edição para ver de perto. A página inteira muda de cor junto.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Sabores">
+        <button class="tab" role="tab" id="tab-maca" aria-controls="edition" aria-selected="true" data-id="maca" style="--c:#FF7A1A"><i></i>Maçã</button>
+        <button class="tab" role="tab" id="tab-amora" aria-controls="edition" aria-selected="false" tabindex="-1" data-id="amora" style="--c:#FF3FA4"><i></i>Amora</button>
+        <button class="tab" role="tab" id="tab-pomelo" aria-controls="edition" aria-selected="false" tabindex="-1" data-id="pomelo" style="--c:#A578FF"><i></i>Pomelo</button>
+      </div>
+
+      <div class="stage" data-reveal>
+        <figure class="banner" id="banner">
+          <img src="assets/maca.jpg" class="on" data-id="maca" alt="Lata de Red Bull The Maçã Edition Sugarfree entre fatias de maçã e respingos" width="1600" height="893">
+          <img src="assets/amora.jpg" data-id="amora" alt="Lata de Red Bull The Amora Edition Sugarfree entre amoras e respingos rosa" width="1600" height="893" loading="lazy">
+          <img src="assets/pomelo.jpg" data-id="pomelo" alt="Lata de Red Bull The Pomelo Edition Sugarfree entre gomos cítricos e respingos lilás" width="1600" height="893" loading="lazy">
+          <div class="fx" id="fx"></div>
+        </figure>
+      </div>
+
+      <div class="edition" id="edition" role="tabpanel" aria-labelledby="tab-maca" aria-live="polite">
+        <h3 id="edName"><small>Sugarfree</small>The Maçã Edition</h3>
+        <p id="edText">Maçã verde e vermelha, crocante e refrescante. Dulçor na medida certa, sem nenhum grama de açúcar.</p>
+        <a class="btn btn-accent" id="edBuy" href="#comprar" data-id="maca">Quero a Maçã</a>
+      </div>
+      <ul class="notes" id="edNotes" style="margin-top:18px"><li>Maçã verde</li><li>Maçã vermelha</li><li>Final refrescante</li></ul>
+    </div>
+  </section>
+
+  <section id="sem-acucar" class="specs-band">
+    <div class="wrap">
+      <div class="head">
+        <h2>O mesmo Red Bull. <span class="hl">Sem açúcar.</span></h2>
+        <p>A fórmula que te dá asas, adoçada sem açúcar, em todas as edições Sugarfree.</p>
+      </div>
+      <div class="specs" data-reveal>
+        <div class="spec"><span class="num"><span data-count="0">0</span><small>g</small></span><h3>de açúcar</h3><p>Adoçado com edulcorantes, para quem quer energia sem açúcar.</p></div>
+        <div class="spec"><span class="num"><span data-count="80">80</span><small>mg</small></span><h3>de cafeína</h3><p>Por lata de 250 ml, mais ou menos o mesmo que uma xícara de café.</p></div>
+        <div class="spec"><span class="num"><span data-count="250">250</span><small>ml</small></span><h3>Lata gelada</h3><p>O formato de sempre, que cabe na mão, na mochila e na geladeira.</p></div>
+        <div class="spec"><span class="num">B</span><h3>Taurina e vitaminas B</h3><p>Com taurina e vitaminas do complexo B, como na fórmula original.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="linha">
+    <div class="wrap film-grid" data-reveal>
+      <div>
+        <div class="head" style="margin-bottom:8px">
+          <h2>A linha <span class="hl">Sugarfree</span> completa</h2>
+          <p>Os novos sabores chegam para se juntar à família sem açúcar.</p>
+        </div>
+        <ul class="lineup">
+          <li><i style="--c:#A578FF"></i>The Pomelo Edition</li>
+          <li><i style="--c:#FF3FA4"></i>The Amora Edition</li>
+          <li><i style="--c:#F2385A"></i>The Summer Edition</li>
+          <li><i style="--c:#FF9A1F"></i>The Maçã Edition</li>
+          <li><i style="--c:#C9CED8"></i>Red Bull Sugarfree</li>
+          <li><i style="--c:#2C8BE6"></i>Red Bull Sugarfree azul</li>
+        </ul>
+      </div>
+      <div class="film-frame">
+        <video id="lineFilm" src="assets/lineup.mp4" poster="assets/lineup-poster.jpg" muted loop playsinline preload="metadata" aria-label="Vídeo com as seis latas da linha Red Bull Sugarfree"></video>
+        <button class="film-toggle" id="lineToggle" type="button" aria-label="Reproduzir vídeo" style="right:14px;bottom:14px">
+          <svg viewBox="0 0 18 18" id="lineIcon"><path d="M4 2.5v13a1 1 0 0 0 1.5.9l10.5-6.5a1 1 0 0 0 0-1.8L5.5 1.6A1 1 0 0 0 4 2.5Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="comprar" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <h2>Monte seu <span class="hl">pedido</span></h2>
+        <p>Escolha o sabor e o tamanho. Frete grátis a partir da caixa com 24 latas.</p>
+      </div>
+      <form class="shop-card" id="shop" novalidate>
+        <div>
+          <fieldset>
+            <legend>Sabor</legend>
+            <div class="choices">
+              <div class="choice"><input type="radio" name="flavor" id="f-maca" value="maca" checked><label for="f-maca"><b>Maçã</b><small>The Maçã Edition</small></label></div>
+              <div class="choice"><input type="radio" name="flavor" id="f-amora" value="amora"><label for="f-amora"><b>Amora</b><small>The Amora Edition</small></label></div>
+              <div class="choice"><input type="radio" name="flavor" id="f-pomelo" value="pomelo"><label for="f-pomelo"><b>Pomelo</b><small>The Pomelo Edition</small></label></div>
+              <div class="choice"><input type="radio" name="flavor" id="f-mix" value="mix"><label for="f-mix"><b>Mix</b><small>Os 3 sabores</small></label></div>
+            </div>
+          </fieldset>
+          <fieldset style="margin-bottom:0">
+            <legend>Quantidade</legend>
+            <div class="choices">
+              <div class="choice"><input type="radio" name="size" id="s-4" value="4" checked><label for="s-4"><b>Pack 4 latas</b><small>R$ 37,90</small></label></div>
+              <div class="choice"><input type="radio" name="size" id="s-12" value="12"><label for="s-12"><b>Pack 12 latas</b><small>R$ 107,90</small></label></div>
+              <div class="choice"><input type="radio" name="size" id="s-24" value="24"><label for="s-24"><b>Caixa 24 latas</b><small>R$ 199,90</small></label></div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="summary" aria-live="polite">
+          <div class="cans" id="cans"></div>
+          <div><span class="price" id="price">R$ 37,90</span></div>
+          <span class="per" id="per">R$ 9,48 por lata</span>
+          <ul class="perks" id="perks"><li>Entrega para todo o Brasil</li><li>Latas de 250 ml, prontas para gelar</li></ul>
+          <button class="btn btn-accent" type="submit" id="addBtn">Adicionar ao carrinho</button>
+          <p class="status" id="status"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section id="duvidas" style="padding-top:0">
+    <div class="wrap faq-grid">
+      <div class="head">
+        <h2>Dúvidas</h2>
+        <p>Tudo o que você precisa saber antes de abrir a primeira lata.</p>
+      </div>
+      <div>
+        <details><summary>Quanta cafeína tem uma lata?<span class="plus" aria-hidden="true"></span></summary><p class="answer">80 mg por lata de 250 ml, mais ou menos o mesmo que uma xícara de café coado.</p></details>
+        <details><summary>Se não tem açúcar, como é adoçado?<span class="plus" aria-hidden="true"></span></summary><p class="answer">As edições Sugarfree são adoçadas com edulcorantes. A lista completa de ingredientes está impressa em cada lata.</p></details>
+        <details><summary>O sabor muda em relação às Editions com açúcar?<span class="plus" aria-hidden="true"></span></summary><p class="answer">As notas de fruta são as mesmas. A diferença é o dulçor, que fica mais leve e seco no final.</p></details>
+        <details><summary>Quem não deve consumir?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Crianças, gestantes, nutrizes, idosos e pessoas com alguma enfermidade devem consultar um médico antes de consumir. Não é recomendado misturar com bebida alcoólica.</p></details>
+        <details><summary>Qual a melhor forma de servir?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Bem gelado, direto da lata ou num copo com gelo.</p></details>
+        <details><summary>Posso devolver um pedido?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Sim. Compras on-line podem ser canceladas em até 7 dias após o recebimento, conforme o artigo 49 do Código de Defesa do Consumidor.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Qual vai ser a sua?</h2>
+      <p style="color:var(--muted);font-size:var(--step-1)">Toque numa lata para escolher.</p>
+      <div class="final-cans">
+        <button type="button" data-pick="maca" aria-label="Escolher Maçã"><img src="assets/maca-can.jpg" alt="" width="340" height="476" style="--delay:0s"></button>
+        <button type="button" data-pick="amora" aria-label="Escolher Amora"><img src="assets/amora-can.jpg" alt="" width="340" height="476" style="--delay:-1.6s"></button>
+        <button type="button" data-pick="pomelo" aria-label="Escolher Pomelo"><img src="assets/pomelo-can.jpg" alt="" width="340" height="476" style="--delay:-3.2s"></button>
+      </div>
+      <a class="btn btn-accent" href="#comprar">Comprar agora</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p><strong>Red Bull Energy Drink Sugarfree.</strong> Lata de 250 ml. Contém cafeína (80 mg por lata).</p>
+    <p>Crianças, gestantes, nutrizes, idosos e portadores de enfermidades: consultar o médico antes de consumir o produto. Não é recomendado o consumo com bebida alcoólica. Imagens meramente ilustrativas.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var root = document.documentElement;
+  var CAN = { maca: "assets/maca-can.jpg", amora: "assets/amora-can.jpg", pomelo: "assets/pomelo-can.jpg" };
+  var editions = {
+    maca: { name: "The Maçã Edition", short: "Maçã", a: "#FF7A1A", b: "#FFD23F",
+      text: "Maçã verde e vermelha, crocante e refrescante. Dulçor na medida certa, sem nenhum grama de açúcar.",
+      notes: ["Maçã verde", "Maçã vermelha", "Final refrescante"] },
+    amora: { name: "The Amora Edition", short: "Amora", a: "#FF3FA4", b: "#5CE1FF",
+      text: "Amora e frutas vermelhas, intensa e suculenta, com aquele final levemente ácido. Zero açúcar.",
+      notes: ["Amora", "Framboesa", "Frutas vermelhas"] },
+    pomelo: { name: "The Pomelo Edition", short: "Pomelo", a: "#A578FF", b: "#6FD3FF",
+      text: "Cítrico e levemente amargo, como uma toranja gelada. Leve, vibrante e sem açúcar.",
+      notes: ["Pomelo", "Limão-siciliano", "Toque cítrico"] }
+  };
+
+  // ---------- edition switcher ----------
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  var banner = document.getElementById("banner");
+  var fx = document.getElementById("fx");
+  var current = "maca";
+  var auto = null;
+
+  function streaks() {
+    if (reduce || !fx.animate) return;
+    for (var i = 0; i < 7; i++) {
+      var s = document.createElement("span");
+      var top = 10 + Math.random() * 80;
+      s.style.cssText = "top:" + top + "%;left:-40%;width:" + (25 + Math.random() * 30) + "%";
+      fx.appendChild(s);
+      var a = s.animate(
+        [{ transform: "translateX(0) rotate(-14deg)", opacity: 0 }, { opacity: 1, offset: 0.2 }, { transform: "translateX(420%) rotate(-14deg)", opacity: 0 }],
+        { duration: 650 + Math.random() * 300, delay: i * 40, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }
+      );
+      a.onfinish = (function (el) { return function () { el.remove(); }; })(s);
+    }
+  }
+
+  function show(id, fromUser) {
+    if (fromUser && auto) { clearInterval(auto); auto = null; }
+    if (id === current) return;
+    current = id;
+    var e = editions[id];
+    root.style.setProperty("--accent", e.a);
+    root.style.setProperty("--accent-2", e.b);
+    tabs.forEach(function (t) {
+      var on = t.dataset.id === id;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    document.getElementById("edition").setAttribute("aria-labelledby", "tab-" + id);
+    banner.querySelectorAll("img").forEach(function (img) { img.classList.toggle("on", img.dataset.id === id); });
+    var name = document.getElementById("edName");
+    name.innerHTML = "<small>Sugarfree</small>" + e.name;
+    document.getElementById("edText").textContent = e.text;
+    var buy = document.getElementById("edBuy");
+    buy.textContent = "Quero a " + e.short;
+    buy.dataset.id = id;
+    document.getElementById("edNotes").innerHTML = e.notes.map(function (n) { return "<li>" + n + "</li>"; }).join("");
+    ["edName", "edText", "edNotes"].forEach(function (k) {
+      var el = document.getElementById(k);
+      el.classList.remove("swap"); void el.offsetWidth; el.classList.add("swap");
+    });
+    streaks();
+  }
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { show(t.dataset.id, true); });
+    t.addEventListener("keydown", function (ev) {
+      var d = ev.key === "ArrowRight" ? 1 : ev.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      ev.preventDefault();
+      var next = tabs[(i + d + tabs.length) % tabs.length];
+      next.focus(); show(next.dataset.id, true);
+    });
+  });
+
+  // rotate editions until the visitor picks one; only while the switcher is on screen
+  var order = ["maca", "amora", "pomelo"];
+  if (!reduce && "IntersectionObserver" in window) {
+    auto = setInterval(function () {
+      if (banner.dataset.visible !== "1") return;
+      show(order[(order.indexOf(current) + 1) % 3], false);
+    }, 6000);
+    new IntersectionObserver(function (e) { banner.dataset.visible = e[0].isIntersecting ? "1" : "0"; }, { threshold: 0.4 }).observe(banner);
+  }
+
+  // banner leans toward the cursor
+  if (!reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    var tx = 0, ty = 0, cx = 0, cy = 0, frame = null;
+    function step() {
+      cx += (tx - cx) * 0.1; cy += (ty - cy) * 0.1;
+      banner.style.transform = "rotateY(" + (cx * 5).toFixed(2) + "deg) rotateX(" + (-cy * 4).toFixed(2) + "deg)";
+      frame = Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002 ? requestAnimationFrame(step) : null;
+    }
+    banner.addEventListener("pointermove", function (e) {
+      var r = banner.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width - 0.5; ty = (e.clientY - r.top) / r.height - 0.5;
+      if (!frame) frame = requestAnimationFrame(step);
+    });
+    banner.addEventListener("pointerleave", function () { tx = 0; ty = 0; if (!frame) frame = requestAnimationFrame(step); });
+  }
+
+  // ---------- videos ----------
+  var PAUSE = '<rect x="3" y="2" width="4" height="14" rx="1"/><rect x="11" y="2" width="4" height="14" rx="1"/>';
+  var PLAY = '<path d="M4 2.5v13a1 1 0 0 0 1.5.9l10.5-6.5a1 1 0 0 0 0-1.8L5.5 1.6A1 1 0 0 0 4 2.5Z"/>';
+  function wire(video, btn, icon, autoplay) {
+    var userPaused = !autoplay;
+    function paint() { icon.innerHTML = video.paused ? PLAY : PAUSE; btn.setAttribute("aria-label", video.paused ? "Reproduzir vídeo" : "Pausar vídeo"); }
+    video.addEventListener("play", paint); video.addEventListener("pause", paint);
+    btn.addEventListener("click", function () {
+      if (video.paused) { userPaused = false; video.play().catch(function () {}); } else { userPaused = true; video.pause(); }
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (e) {
+        if (e[0].isIntersecting) { if (!userPaused) video.play().catch(function () {}); } else video.pause();
+      }, { threshold: 0.3 }).observe(video);
+    }
+    paint();
+  }
+  var hero = document.getElementById("heroFilm");
+  if (reduce) { hero.removeAttribute("autoplay"); hero.pause(); }
+  wire(hero, document.getElementById("heroToggle"), document.getElementById("heroIcon"), !reduce);
+  wire(document.getElementById("lineFilm"), document.getElementById("lineToggle"), document.getElementById("lineIcon"), !reduce);
+
+  var ticker = document.getElementById("tickerTrack");
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (e) { ticker.style.animationPlayState = e[0].isIntersecting ? "running" : "paused"; }).observe(ticker);
+  }
+
+  // ---------- scroll reveals + counters ----------
+  function countUp(el) {
+    el.querySelectorAll("[data-count]").forEach(function (n) {
+      var end = Number(n.dataset.count), t0 = performance.now();
+      (function tick(t) {
+        var p = Math.min((t - t0) / 1000, 1);
+        n.textContent = Math.round(end * (1 - Math.pow(1 - p, 4)));
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    });
+  }
+  if (!reduce && "IntersectionObserver" in window) {
+    var revealer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.remove("is-pre");
+        countUp(e.target);
+        revealer.unobserve(e.target);
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll("[data-reveal]").forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      el.classList.add("is-pre");
+      el.querySelectorAll("[data-count]").forEach(function (n) { n.textContent = "0"; });
+      revealer.observe(el);
+    });
+  }
+
+  // ---------- shop ----------
+  var form = document.getElementById("shop");
+  var prices = { 4: 37.9, 12: 107.9, 24: 199.9 };
+  var cans = document.getElementById("cans");
+  var lastCans = "";
+  function brl(n) { return "R$ " + n.toFixed(2).replace(".", ","); }
+  function paintCans(flavor) {
+    var ids = flavor === "mix" ? ["maca", "amora", "pomelo"] : [flavor, flavor, flavor];
+    var key = ids.join();
+    if (key === lastCans) return;
+    lastCans = key;
+    cans.innerHTML = ids.map(function (id, i) {
+      return '<img class="pop" src="' + CAN[id] + '" alt="" width="340" height="476" style="animation-delay:' + i * 70 + 'ms">';
+    }).join("");
+  }
+  function update() {
+    var size = Number(form.size.value), flavor = form.flavor.value;
+    var total = prices[size];
+    var price = document.getElementById("price");
+    if (price.textContent !== brl(total) && price.animate) {
+      price.animate(reduce ? [{ opacity: 0.3 }, { opacity: 1 }] : [{ opacity: 0.2, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }],
+        { duration: 220, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    }
+    price.textContent = brl(total);
+    document.getElementById("per").textContent = brl(total / size) + " por lata";
+    document.getElementById("perks").innerHTML = (size === 24 ? "<li>Frete grátis</li>" : "<li>Entrega para todo o Brasil</li>") +
+      (flavor === "mix" ? "<li>Quantidades iguais de cada sabor</li>" : "<li>Latas de 250 ml, prontas para gelar</li>");
+    paintCans(flavor);
+    document.getElementById("status").textContent = "";
+    if (flavor !== "mix") show(flavor, true);
+  }
+  form.addEventListener("change", update);
+  update();
+
+  function pick(id) {
+    var input = document.getElementById("f-" + id);
+    if (input) { input.checked = true; update(); }
+  }
+  document.getElementById("edBuy").addEventListener("click", function () { pick(this.dataset.id); });
+  document.querySelectorAll("[data-pick]").forEach(function (b) {
+    b.addEventListener("click", function () { pick(b.dataset.pick); document.getElementById("comprar").scrollIntoView(); });
+  });
+
+  // bubbles burst out of the add-to-cart button
+  function burst(x, y) {
+    if (reduce || !document.body.animate) return;
+    var colors = [editions[current].a, editions[current].b, "#FFFFFF"];
+    for (var i = 0; i < 14; i++) {
+      var d = document.createElement("span"), size = 6 + Math.random() * 14;
+      d.setAttribute("aria-hidden", "true");
+      d.style.cssText = "position:fixed;pointer-events:none;z-index:30;border-radius:50%;left:" + x + "px;top:" + y + "px;width:" + size + "px;height:" + size +
+        "px;margin:" + (-size / 2) + "px 0 0 " + (-size / 2) + "px;border:2px solid " + colors[i % 3] + ";background:" + (i % 2 ? colors[i % 3] : "transparent");
+      document.body.appendChild(d);
+      var ang = Math.random() * Math.PI * 2, dist = 50 + Math.random() * 110;
+      var a = d.animate([
+        { transform: "translate(0,0) scale(0.3)", opacity: 1 },
+        { transform: "translate(" + Math.cos(ang) * dist + "px," + (Math.sin(ang) * dist - 40) + "px) scale(1)", opacity: 0 }
+      ], { duration: 700 + Math.random() * 400, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+      a.onfinish = (function (el) { return function () { el.remove(); }; })(d);
+    }
+  }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var flavor = form.flavor.value, size = form.size.value;
+    var label = flavor === "mix" ? "Mix dos 3 sabores" : editions[flavor].name;
+    var status = document.getElementById("status");
+    status.textContent = "Adicionado: " + label + ", " + size + " latas.";
+    var btn = document.getElementById("addBtn"), r = btn.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2);
+    btn.textContent = "Adicionado";
+    clearTimeout(btn._t);
+    btn._t = setTimeout(function () { btn.textContent = "Adicionar ao carrinho"; }, 1800);
+  });
+})();
+</script>
+</body>
+</html>
